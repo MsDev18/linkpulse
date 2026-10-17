@@ -1,0 +1,7 @@
+migrate
+|
+|_______________ up: migrate -source "file://migrations" -database "mysql://admin:admin@(0.0.0.0:3307)/linkpulse?x-migrations-table=migrations" up
+|
+|_______________ down: migrate -source "file://migrations" -database "mysql://admin:admin@(0.0.0.0:3307)/linkpulse?x-migrations-table=migrations" down
+
+
