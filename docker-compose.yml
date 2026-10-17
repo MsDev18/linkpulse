@@ -1,0 +1,22 @@
+services:
+  mysql_container:
+    container_name: mysql_container
+    image: mysql:8.4
+    restart: unless-stopped
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+      MYSQL_DATABASE: linkpulse
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - project
+
+volumes:
+  mysql-data:
+
+networks:
+  project:
