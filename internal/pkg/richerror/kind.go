@@ -3,11 +3,11 @@ package richerror
 type Kind uint8
 
 const (
-	KindUnknown Kind = iota + 1
-	KindInvalid
+	KindUnexpected Kind = iota + 1
+	KindBadRequest
 	KindNotFound
 	KindConflict
-	KindUnauthenticated
+	KindUnauthorize
 	KindForbidden
 	KindInternal
 	KindUnavailable
