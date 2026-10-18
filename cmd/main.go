@@ -3,6 +3,7 @@ package main
 import (
 	"linkpulse/internal/api/server"
 	"linkpulse/internal/pkg/migrator"
+	"linkpulse/internal/repository/mysql"
 )
 
 func main () {
@@ -14,9 +15,13 @@ func main () {
 	defer m.Close()
 	m.Up()
 
+	// new instance myswl repo 
+	mysqlRepo := mysql.New(config.MySQL)
+
 	// handlers
 	health := SetupHealthModule()
+	auth := SetupAuthModule(config.Auth, mysqlRepo)
 
-	httpServer := server.New(config.Server , health)
+	httpServer := server.New(config.Server , health , auth)
 	httpServer.Run()
 }

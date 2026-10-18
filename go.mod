@@ -4,6 +4,7 @@ go 1.26.4
 
 require (
 	github.com/gin-gonic/gin v1.12.0
+	github.com/go-ozzo/ozzo-validation/v4 v4.4.1
 	github.com/go-sql-driver/mysql v1.10.1
 	github.com/golang-migrate/migrate/v4 v4.20.1
 	github.com/knadh/koanf/parsers/dotenv v1.1.3

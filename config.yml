@@ -5,3 +5,6 @@ server:
   read_timeout: 3m
   write_timeout: 3m
   idle_timeout: 3m
+
+auth:
+  otp_code_duration: 2m
