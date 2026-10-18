@@ -1,2 +1,7 @@
-test_server:
-  host_server: "wajvgrukvyrvg"
+server:
+  host: 0.0.0.0
+  port: 3000
+  env: development
+  read_timeout: 3m
+  write_timeout: 3m
+  idle_timeout: 3m
