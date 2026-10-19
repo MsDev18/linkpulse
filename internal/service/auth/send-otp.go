@@ -9,7 +9,6 @@ import (
 	"linkpulse/internal/pkg/richerror"
 	"math/big"
 	"time"
-
 )
 
 func (s Service) SendOtp(ctx context.Context, req dto.SendOtpRequest) (dto.SendOtpResponse, error) {
@@ -70,8 +69,13 @@ func (s Service) updateOrCreateOtp(ctx context.Context, userID uint) (*entity.Ot
 		return nil, err
 	}
 	expiresAt := time.Now().Add(s.config.OtpCodeDuration)
-	
+
 	if otp != nil {
+		if !time.Now().After(otp.ExpiresAt) {
+			return nil, richerror.New(op).
+				SetMessage("you have actived otp code").
+				SetKind(richerror.KindBadRequest)
+		}
 		otp.Code = code
 		otp.ExpiresAt = expiresAt
 		err := s.repository.UpdateOtpByUserID(ctx, *otp)

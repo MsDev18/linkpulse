@@ -2,7 +2,7 @@ package main
 
 import (
 	"linkpulse/internal/api/server"
-	"linkpulse/internal/pkg/migrator"
+	"linkpulse/internal/migrator"
 	"linkpulse/internal/repository/mysql"
 )
 
