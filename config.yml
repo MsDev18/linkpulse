@@ -8,3 +8,5 @@ server:
 
 auth:
   otp_code_duration: 2m
+  refresh_token_duration: 720h
+  access_token_duration: 30m

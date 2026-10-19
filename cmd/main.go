@@ -4,6 +4,7 @@ import (
 	"linkpulse/internal/api/server"
 	"linkpulse/internal/migrator"
 	"linkpulse/internal/repository/mysql"
+	authmiddleware "linkpulse/internal/api/middleware/auth"
 )
 
 func main () {
@@ -22,6 +23,10 @@ func main () {
 	health := SetupHealthModule()
 	auth := SetupAuthModule(config.Auth, mysqlRepo)
 
-	httpServer := server.New(config.Server , health , auth)
+	// middlewares 
+	authMiddleware := authmiddleware.New(config.Auth.AccessTokenSecret)
+	
+
+	httpServer := server.New(config.Server , health , auth, authMiddleware)
 	httpServer.Run()
 }
