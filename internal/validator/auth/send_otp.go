@@ -22,16 +22,17 @@ func (v Validator) SendOtp(ctx context.Context, req dto.SendOtpRequest) error {
 		return nil
 	}
 
-	var fieldErr *validation.Errors
+	var fieldErr validation.Errors
 	if errors.As(err, &fieldErr) {
-		meta := make(map[string]any, len(*fieldErr))
-		for field, fieldErr := range *fieldErr {
+		meta := make(map[string]any, len(fieldErr))
+		for field, fieldErr := range fieldErr {
 			meta[field] = fieldErr.Error()
 		}
 		return richerror.New(op).
 			SetMessage("invalid input").
 			SetKind(richerror.KindBadRequest).
-			SetErr(err)
+			SetErr(err).
+			SetMeta(meta)
 	}
 
 	return richerror.

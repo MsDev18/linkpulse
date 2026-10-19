@@ -3,6 +3,7 @@ package auth
 import (
 	"context"
 	dto "linkpulse/internal/dto/auth"
+	"linkpulse/internal/entity"
 	"linkpulse/internal/pkg/claims"
 	"linkpulse/internal/pkg/richerror"
 	"time"
@@ -47,12 +48,21 @@ func (s Service) CheckOtp(ctx context.Context, req dto.CheckOtpRequest) (dto.Che
 			SetKind(richerror.KindUnauthorize)
 	}
 
+	sessionRecord := entity.Session{
+		UserID: user.ID,
+		ExpiresAt: time.Now().Add(s.config.RefreshTokenDuration),
+	}
+	session , err := s.repository.CreateSession(ctx, sessionRecord)
+	if err != nil {
+		return dto.CheckOtpResponse{},err
+	}
+
 	// jwt code 
-	accessToken , err := claims.GenAccessToken(s.config.AccessTokenSecret , user.ID , s.config.AccessTokenDuration)
+	accessToken , err := claims.GenAccessToken(s.config.AccessTokenSecret , user.ID, session.ID , s.config.AccessTokenDuration)
 	if err != nil {
 		return dto.CheckOtpResponse{} , err
 	}
-	refreshToken, err := claims.GenRefreshToken(s.config.RefreshTokenSecret , user.ID , s.config.RefreshTokenDuration) 
+	refreshToken, err := claims.GenRefreshToken(s.config.RefreshTokenSecret , user.ID, session.ID , s.config.RefreshTokenDuration) 
 	if err != nil {
 		return dto.CheckOtpResponse{}, err
 	}

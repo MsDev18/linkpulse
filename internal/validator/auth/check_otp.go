@@ -32,7 +32,8 @@ func (v Validator) CheckOtp(ctx context.Context, req dto.CheckOtpRequest) error 
 		return richerror.New(op).
 			SetMessage("invalid inputs").
 			SetKind(richerror.KindBadRequest).
-			SetErr(err)
+			SetErr(err).
+			SetMeta(meta)
 	}
 	return richerror.New(op).
 		SetMessage("unexpected err in validation").

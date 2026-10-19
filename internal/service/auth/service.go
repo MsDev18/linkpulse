@@ -4,6 +4,7 @@ import (
 	"context"
 	"linkpulse/internal/entity"
 	"time"
+
 )
 
 type Service struct {
@@ -26,6 +27,9 @@ type Repository interface {
 	UpdateOtpByUserID(ctx context.Context, otp entity.Otp) error
 	CreateOtp(ctx context.Context, otp entity.Otp) (*entity.Otp, error)
 	GetUserByID(ctx context.Context, id uint) (*entity.User, error)
+	CreateSession(ctx context.Context, session entity.Session) (*entity.Session, error)
+	GetSessionByID(ctx context.Context, id uint) (*entity.Session, error)
+	RevokeSessionByID(ctx context.Context, sessionID uint) error
 }
 
 func New(config Config, repository Repository) Service {

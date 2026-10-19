@@ -20,6 +20,7 @@ func (h Hander) SendOtp(c *gin.Context) {
 				SetKind(richerror.KindBadRequest).
 				SetErr(err),
 		)
+		return
 	}
 
 	if err := h.validator.SendOtp(c.Request.Context(), req); err != nil {

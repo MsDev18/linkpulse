@@ -8,15 +8,17 @@ import (
 )
 
 type RefreshTokenClaims struct {
-	UserID uint `json:"user-id"`
+	UserID    uint `json:"user-id"`
+	SessionID uint `json:"session-id"`
 	jwt.RegisteredClaims
 }
 
-func GenRefreshToken(secret string, userID uint, expiresAt time.Duration) (string, error) {
+func GenRefreshToken(secret string, userID uint, sessionID uint, expiresAt time.Duration) (string, error) {
 	const op = "claims.GenRefreshToken"
 
 	claim := RefreshTokenClaims{
-		UserID: userID,
+		UserID:    userID,
+		SessionID: sessionID,
 		RegisteredClaims: jwt.RegisteredClaims{
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(expiresAt)),
