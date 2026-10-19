@@ -16,7 +16,7 @@ type Config struct {
 	AccessTokenSecret    string        `koanf:"access_token_secret"`
 	AccessTokenDuration  time.Duration `koanf:"access_token_duration"`
 	RefreshTokenSecret   string        `koanf:"refresh_token_secret"`
-	RefreshTokenDuration time.Duration `koanf:"refresh_token_duratioon"`
+	RefreshTokenDuration time.Duration `koanf:"refresh_token_duration"`
 }
 
 type Repository interface {
