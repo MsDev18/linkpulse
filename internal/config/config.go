@@ -3,6 +3,7 @@ package config
 import (
 	"linkpulse/internal/api/server"
 	"linkpulse/internal/repository/mysql"
+	"linkpulse/internal/repository/redis"
 	authservice "linkpulse/internal/service/auth"
 
 	"github.com/knadh/koanf/v2"
@@ -13,8 +14,9 @@ type KoanfConfig struct {
 }
 
 type Config struct {
-	MySQL  mysql.Config        `koanf:"mysql"`
-	Server server.Config       `koanf:"server"`
+	MySQL  mysql.Config       `koanf:"mysql"`
+	Redis  redis.Config       `koanf:"redis"`
+	Server server.Config      `koanf:"server"`
 	Auth   authservice.Config `koanf:"auth"`
 }
 
