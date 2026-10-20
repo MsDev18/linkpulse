@@ -16,7 +16,7 @@ services:
       - project
   redis_container:
     container_name: redis_container
-    image: redis:7.4.1-alpine
+    image: redis:8.10-alpine
     restart: unless-stopped
     command: ["redis-server", "--appendonly", "yes"]
     ports:

@@ -41,7 +41,7 @@ func New(config Config, health health.Handler, auth auth.Hander, authMiddleware 
 		log.Fatalf("please implement configurations")
 	}
 
-	//.validation config.env
+	// validation config.env
 	env := Env(config.Env)
 	if !env.isValid() {
 		log.Fatalf("please enter correct env config")

@@ -5,7 +5,7 @@ import (
 	"linkpulse/internal/migrator"
 	"linkpulse/internal/repository/mysql"
 	"linkpulse/internal/repository/redis"
-	"linkpulse/internal/repository/redis/ratelimiter"
+	"linkpulse/internal/repository/redis/ratelimit"
 )
 
 func main () {
@@ -22,7 +22,7 @@ func main () {
 	redisRepo := redis.New(config.Redis)
 	defer redisRepo.Conn.Close()
 
-	_ = ratelimiter.New(redisRepo)
+	_ = ratelimit.New(redisRepo)
 
 
 	// handlers

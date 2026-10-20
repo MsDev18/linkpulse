@@ -1,1 +1,1 @@
-DROP TABLE `otp`;
+DROP TABLE IF EXISTS `otp`;
