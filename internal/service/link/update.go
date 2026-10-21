@@ -25,18 +25,15 @@ func (s Service) Update(ctx context.Context, userID, linkID uint, req dto.Update
 			SetMessage("link not found").
 			SetKind(richerror.KindNotFound)
 	}
-	if req.OriginalURL.Set {
-		item.OriginalURL = req.OriginalURL.Value
+	if req.OriginalURL != "" {
+		item.OriginalURL = req.OriginalURL
 	}
-	if req.CustomCode.Set {
-		item.Code = req.CustomCode.Value
+	if req.CustomCode != "" {
+		item.Code = req.CustomCode
 	}
-	if req.ExpiresAt.Set {
-		item.ExpiresAt = nil
-		if !req.ExpiresAt.Null {
-			value := req.ExpiresAt.Value.UTC()
-			item.ExpiresAt = &value
-		}
+	if req.ExpiresAt != nil {
+		value := req.ExpiresAt.UTC()
+		item.ExpiresAt = &value
 	}
 	item, err = s.repository.Update(ctx, userID, linkID, *item)
 	if err != nil {
