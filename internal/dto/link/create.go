@@ -8,7 +8,7 @@ type CreateRequest struct {
 	ExpiresAt   *time.Time `json:"expires-at"`
 }
 
-type CreateResponse struct {
+type GetOneResponse struct {
 	ID          uint       `json:"id"`
 	OriginalURL string     `json:"original-url"`
 	Code        string     `json:"code"`
