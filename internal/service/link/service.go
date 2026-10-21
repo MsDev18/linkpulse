@@ -25,6 +25,7 @@ type Repository interface {
 	IsExistsCode(ctx context.Context, code string) (bool, error)
 	GetAll(ctx context.Context, userID uint) ([]*entity.Link, error)
 	GetOneByID(ctx context.Context, id uint) (*entity.Link, error)
+	DeleteByID(ctx context.Context, userID uint, linkID uint) error
 }
 
 func New(config Config, repository Repository) Service {
