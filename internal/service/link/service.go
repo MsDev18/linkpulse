@@ -21,6 +21,7 @@ type Config struct {
 }
 
 type Repository interface {
+	Update(ctx context.Context, userID, linkID uint, link entity.Link) (*entity.Link, error)
 	Create(ctx context.Context, link entity.Link) (*entity.Link, error)
 	IsExistsCode(ctx context.Context, code string) (bool, error)
 	GetAll(ctx context.Context, userID uint) ([]*entity.Link, error)
