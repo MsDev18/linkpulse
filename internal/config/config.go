@@ -5,6 +5,7 @@ import (
 	"linkpulse/internal/repository/mysql"
 	"linkpulse/internal/repository/redis"
 	authservice "linkpulse/internal/service/auth"
+	linkservice "linkpulse/internal/service/link"
 
 	"github.com/knadh/koanf/v2"
 )
@@ -14,10 +15,11 @@ type KoanfConfig struct {
 }
 
 type Config struct {
-	MySQL  mysql.Config       `koanf:"mysql"`
-	Redis  redis.Config       `koanf:"redis"`
-	Server server.Config      `koanf:"server"`
-	Auth   authservice.Config `koanf:"auth"`
+	MySQL  mysql.Config        `koanf:"mysql"`
+	Redis  redis.Config        `koanf:"redis"`
+	Server server.Config       `koanf:"server"`
+	Auth   authservice.Config  `koanf:"auth"`
+	Link   linkservice.Config `koanf:"link"`
 }
 
 func New() KoanfConfig {

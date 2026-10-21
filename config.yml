@@ -10,3 +10,6 @@ auth:
   otp_code_duration: 2m
   refresh_token_duration: 720h
   access_token_duration: 30m
+
+link:
+  public_base_url: 0.0.0.0:3000

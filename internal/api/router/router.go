@@ -1,31 +1,34 @@
 package router
 
 import (
-	health "linkpulse/internal/api/handler/health"
 	auth "linkpulse/internal/api/handler/auth"
+	health "linkpulse/internal/api/handler/health"
+	link "linkpulse/internal/api/handler/link"
 	authmiddleware "linkpulse/internal/api/middleware/auth"
 
 	"github.com/gin-gonic/gin"
 )
 
 type Router struct {
-	e *gin.Engine
-	health health.Handler
-	auth auth.Hander
+	e              *gin.Engine
+	health         health.Handler
+	auth           auth.Hander
+	link           link.Handler
 	authMiddleware authmiddleware.Middleware
 }
 
-func New(e *gin.Engine , health health.Handler, auth auth.Hander, authMiddleware authmiddleware.Middleware) Router {
+func New(e *gin.Engine, health health.Handler, auth auth.Hander, link link.Handler, authMiddleware authmiddleware.Middleware) Router {
 	return Router{
-		e: e,
-		health: health,
-		auth: auth,
+		e:              e,
+		health:         health,
+		auth:           auth,
+		link:           link,
 		authMiddleware: authMiddleware,
 	}
 }
 
-
-func (r Router) RegisterRoute () {
+func (r Router) RegisterRoute() {
 	r.RegisterHealthRoute()
 	r.RegisterAuthRoute()
+	r.RegisterLinkRoute()
 }

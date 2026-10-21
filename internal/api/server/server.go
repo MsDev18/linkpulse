@@ -2,8 +2,9 @@ package server
 
 import (
 	"fmt"
-	health "linkpulse/internal/api/handler/health"
 	auth "linkpulse/internal/api/handler/auth"
+	health "linkpulse/internal/api/handler/health"
+	"linkpulse/internal/api/handler/link"
 	authmiddleware "linkpulse/internal/api/middleware/auth"
 	"linkpulse/internal/api/router"
 	"log"
@@ -33,7 +34,7 @@ type Server struct {
 	httpServer *http.Server
 }
 
-func New(config Config, health health.Handler, auth auth.Hander, authMiddleware authmiddleware.Middleware) Server {
+func New(config Config, health health.Handler, auth auth.Hander,link link.Handler, authMiddleware authmiddleware.Middleware) Server {
 	// new instance from gin engine
 	engine := gin.Default()
 	// validation configs
@@ -54,7 +55,7 @@ func New(config Config, health health.Handler, auth auth.Hander, authMiddleware 
 	}
 
 	// routre package
-	appRouter := router.New(engine, health, auth , authMiddleware)
+	appRouter := router.New(engine, health, auth ,link, authMiddleware)
 	appRouter.RegisterRoute()
 
 	httpServer := &http.Server{
