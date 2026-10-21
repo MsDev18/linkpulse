@@ -3,8 +3,8 @@ package link
 import "time"
 
 type CreateRequest struct {
-	OriginalURL string     `json:"original-url"`
-	CustomCode  string     `json:"custom-code"`
+	OriginalURL string     `json:"original-url" binding:"required"`
+	CustomCode  string     `json:"custom-code" binding:"required"`
 	ExpiresAt   *time.Time `json:"expires-at"`
 }
 
