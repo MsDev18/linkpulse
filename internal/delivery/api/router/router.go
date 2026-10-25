@@ -1,10 +1,10 @@
 package router
 
 import (
-	auth "linkpulse/internal/api/handler/auth"
-	health "linkpulse/internal/api/handler/health"
-	link "linkpulse/internal/api/handler/link"
-	authmiddleware "linkpulse/internal/api/middleware/auth"
+	auth "linkpulse/internal/delivery/api/handler/auth"
+	health "linkpulse/internal/delivery/api/handler/health"
+	link "linkpulse/internal/delivery/api/handler/link"
+	authmiddleware "linkpulse/internal/delivery/api/middleware/auth"
 
 	"github.com/gin-gonic/gin"
 )

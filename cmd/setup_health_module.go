@@ -1,6 +1,6 @@
 package main
 
-import "linkpulse/internal/api/handler/health"
+import "linkpulse/internal/delivery/api/handler/health"
 
 func SetupHealthModule () health.Handler {
 	handler := health.New()

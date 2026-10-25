@@ -1,7 +1,7 @@
 package main
 
 import (
-	handler "linkpulse/internal/api/handler/link"
+	handler "linkpulse/internal/delivery/api/handler/link"
 	"linkpulse/internal/repository/mysql"
 	repository "linkpulse/internal/repository/mysql/link"
 	service "linkpulse/internal/service/link"

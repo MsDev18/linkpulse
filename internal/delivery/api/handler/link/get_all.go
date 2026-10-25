@@ -1,7 +1,7 @@
-package auth
+package link
 
 import (
-	authmiddleware "linkpulse/internal/api/middleware/auth"
+	authmiddleware "linkpulse/internal/delivery/api/middleware/auth"
 	"linkpulse/internal/pkg/response"
 	"linkpulse/internal/pkg/richerror"
 	"net/http"
@@ -9,8 +9,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (h Hander) GetMe(c *gin.Context) {
-	const op = "auth-handler.GetMe"
+func (h Handler) GetAll(c *gin.Context) {
+	const op = "link-handler.GetAll"
 
 	ctx := c.Request.Context()
 
@@ -28,17 +28,17 @@ func (h Hander) GetMe(c *gin.Context) {
 	if !ok {
 		response.New(c).Error(
 			richerror.New(op).
-				SetMessage("invalid user id").
+				SetMessage("invalid user id ").
 				SetKind(richerror.KindUnauthorize),
 		)
 		return
 	}
 
-	res, err := h.service.GetMe(ctx , userID)
+	res, err := h.service.GetAll(ctx, userID)
 	if err != nil {
 		response.New(c).Error(err)
-		return 
+		return
 	}
 
-	response.New(c).Send(http.StatusOK , "OK" , res)
+	response.New(c).Send(http.StatusOK, "OK ✅", res)
 }

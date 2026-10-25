@@ -2,11 +2,11 @@ package server
 
 import (
 	"fmt"
-	auth "linkpulse/internal/api/handler/auth"
-	health "linkpulse/internal/api/handler/health"
-	"linkpulse/internal/api/handler/link"
-	authmiddleware "linkpulse/internal/api/middleware/auth"
-	"linkpulse/internal/api/router"
+	auth "linkpulse/internal/delivery/api/handler/auth"
+	health "linkpulse/internal/delivery/api/handler/health"
+	"linkpulse/internal/delivery/api/handler/link"
+	authmiddleware "linkpulse/internal/delivery/api/middleware/auth"
+	"linkpulse/internal/delivery/api/router"
 	"log"
 	"net/http"
 	"time"

@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package = "linkpulse/internal/pb/auth;authpb";
+
+service Auth {
+  rpc SendOtp(SendOtpRequest) returns (SendOtpResponse);
+  rpc CheckOtp(CheckOtpRequest) returns (CheckOtpResponse);
+  // Requires authorization metadata. The server derives user_id from the
+  // validated access token and checks that its session is active.
+  rpc GetMe(GetMeRequest) returns (GetMeResponse);
+  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse);
+  // Requires authorization metadata. Revokes the authenticated session.
+  rpc Logout(LogoutRequest) returns (LogoutResponse);
+}
+
+message SendOtpRequest {
+  string phone_number = 1;
+}
+
+message SendOtpResponse {}
+
+message CheckOtpRequest {
+  string phone_number = 1;
+  string code = 2;
+}
+
+message CheckOtpResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+}
+
+message GetMeRequest {}
+
+message GetMeResponse {
+  uint64 id = 1;
+  string name = 2;
+  string phone_number = 3;
+}
+
+message RefreshTokenRequest {
+  string refresh_token = 1;
+}
+
+message RefreshTokenResponse {
+  string access_token = 1;
+}
+
+message LogoutRequest {}
+
+message LogoutResponse {}

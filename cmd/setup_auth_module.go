@@ -3,10 +3,10 @@ package main
 import (
 	mysql "linkpulse/internal/repository/mysql"
 	service "linkpulse/internal/service/auth"
-	handler "linkpulse/internal/api/handler/auth"
+	handler "linkpulse/internal/delivery/api/handler/auth"
 	validator "linkpulse/internal/validator/auth"
 	repository "linkpulse/internal/repository/mysql/auth"
-	middleware "linkpulse/internal/api/middleware/auth"
+	middleware "linkpulse/internal/delivery/api/middleware/auth"
 )
 
 func SetupAuthModule (config service.Config , mysqlRepo mysql.MySQLDB) (handler.Hander, middleware.Middleware) {

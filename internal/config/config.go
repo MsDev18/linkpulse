@@ -1,7 +1,7 @@
 package config
 
 import (
-	"linkpulse/internal/api/server"
+	"linkpulse/internal/delivery/api/server"
 	"linkpulse/internal/repository/mysql"
 	"linkpulse/internal/repository/redis"
 	authservice "linkpulse/internal/service/auth"

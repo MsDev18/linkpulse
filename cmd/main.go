@@ -1,7 +1,7 @@
 package main
 
 import (
-	"linkpulse/internal/api/server"
+	"linkpulse/internal/delivery/api/server"
 	"linkpulse/internal/migrator"
 	"linkpulse/internal/repository/mysql"
 	"linkpulse/internal/repository/redis"

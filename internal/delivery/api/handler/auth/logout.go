@@ -1,7 +1,7 @@
 package auth
 
 import (
-	"linkpulse/internal/api/middleware/auth"
+	"linkpulse/internal/delivery/api/middleware/auth"
 	"linkpulse/internal/pkg/response"
 	"linkpulse/internal/pkg/richerror"
 	"net/http"
