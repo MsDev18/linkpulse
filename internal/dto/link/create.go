@@ -4,7 +4,7 @@ import "time"
 
 type CreateRequest struct {
 	OriginalURL string     `json:"original-url" binding:"required"`
-	CustomCode  string     `json:"custom-code" binding:"required"`
+	CustomCode  string     `json:"custom-code"`
 	ExpiresAt   *time.Time `json:"expires-at"`
 }
 

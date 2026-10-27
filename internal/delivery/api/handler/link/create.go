@@ -40,7 +40,7 @@ func (h Handler) Create(c *gin.Context) {
 		response.New(c).Error(
 			richerror.New(op).
 				SetMessage("can't bind request").
-				SetKind(richerror.KindUnexpected).
+				SetKind(richerror.KindBadRequest).
 				SetErr(err),
 		)
 		return
