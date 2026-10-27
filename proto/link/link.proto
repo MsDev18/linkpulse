@@ -1,55 +1,51 @@
-syntax = "proto3";
+syntax = "proto3" ;
 
 package link;
 
-option go_package = "linkpulse/internal/pb/link;linkpb";
+option go_package = "linkpulse/internal/pb/link" ;
 
-import "google/protobuf/timestamp.proto";
+import "google/protobuf/timestamp.proto" ;
 
-// Create, Update, GetAll and Delete require authorization metadata containing
-// "Bearer <access_token>". The server validates the token and active session,
-// derives user_id, and enforces ownership. GetOne is public, as in the HTTP API.
-service LinkService {
-  rpc Create(CreateRequest) returns (GetOneResponse);
-  rpc Update(UpdateRequest) returns (GetOneResponse);
-  rpc GetOne(GetOneRequest) returns (GetOneResponse);
-  rpc GetAll(GetAllRequest) returns (GetAllResponse);
-  rpc Delete(DeleteRequest) returns (DeleteResponse);
+service Link {
+  rpc Create(CreateRequest) returns (GetOneResponse) ;
+  rpc Update(UpdateRequest) returns (GetOneResponse) ;
+  rpc GetAll(GetAllRequest) returns (GetAllResponse) ;
+  rpc Delete(DeleteRequest) returns (DeleteResponse) ;
+
+  rpc GetOne(GetOneRequest) returns (GetOneResponse) ;
 }
 
 message CreateRequest {
-  string original_url = 1;
-  // Empty means generate a code automatically in the domain service.
-  string custom_code = 2;
-  // Omitted means the link has no expiration.
-  optional google.protobuf.Timestamp expires_at = 3;
+  string                    original_url = 1;
+  string                    custom_code  = 2;
+  google.protobuf.Timestamp expires_at   = 3;
 }
 
 message GetOneResponse {
-  uint64 id           = 1;
-  string original_url = 2;
-  string code         = 3;
-  string short_url    = 4;
-  // Absent when the link has no expiration.
-  google.protobuf.Timestamp expires_at = 5;
-  google.protobuf.Timestamp created_at = 6;
+  uint64                    id           = 1;
+  string                    original_url = 2;
+  string                    code         = 3;
+  string                    short_url    = 4;
+  google.protobuf.Timestamp expires_at   = 5;
+  google.protobuf.Timestamp created_at   = 6;
 }
 
 message UpdateRequest {
-  // Omitted or empty strings leave the existing value unchanged, matching
-  // the current domain service.
   optional string original_url = 1;
   optional string custom_code  = 2;
-  // Omitted means unchanged. Clearing expiration is not currently supported.
-  optional google.protobuf.Timestamp expires_at = 3;
-  uint64                             id         = 4;
+
+  google.protobuf.Timestamp expires_at = 3;
+
+  uint64 id = 4;
 }
 
 message GetOneRequest {
   uint64 id = 1;
 }
 
-message GetAllRequest {}
+message GetAllRequest {
+
+}
 
 message GetAllResponse {
   repeated GetOneResponse links = 1;
@@ -59,4 +55,6 @@ message DeleteRequest {
   uint64 id = 1;
 }
 
-message DeleteResponse {}
+message DeleteResponse {
+
+}

@@ -4,7 +4,7 @@
 // 	protoc        v7.36.0
 // source: link/link.proto
 
-package linkpb
+package link
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -23,12 +23,10 @@ const (
 )
 
 type CreateRequest struct {
-	state       protoimpl.MessageState `protogen:"open.v1"`
-	OriginalUrl string                 `protobuf:"bytes,1,opt,name=original_url,json=originalUrl,proto3" json:"original_url,omitempty"`
-	// Empty means generate a code automatically in the domain service.
-	CustomCode string `protobuf:"bytes,2,opt,name=custom_code,json=customCode,proto3" json:"custom_code,omitempty"`
-	// Omitted means the link has no expiration.
-	ExpiresAt     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=expires_at,json=expiresAt,proto3,oneof" json:"expires_at,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	OriginalUrl   string                 `protobuf:"bytes,1,opt,name=original_url,json=originalUrl,proto3" json:"original_url,omitempty"`
+	CustomCode    string                 `protobuf:"bytes,2,opt,name=custom_code,json=customCode,proto3" json:"custom_code,omitempty"`
+	ExpiresAt     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -85,12 +83,11 @@ func (x *CreateRequest) GetExpiresAt() *timestamppb.Timestamp {
 }
 
 type GetOneResponse struct {
-	state       protoimpl.MessageState `protogen:"open.v1"`
-	Id          uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	OriginalUrl string                 `protobuf:"bytes,2,opt,name=original_url,json=originalUrl,proto3" json:"original_url,omitempty"`
-	Code        string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`
-	ShortUrl    string                 `protobuf:"bytes,4,opt,name=short_url,json=shortUrl,proto3" json:"short_url,omitempty"`
-	// Absent when the link has no expiration.
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	OriginalUrl   string                 `protobuf:"bytes,2,opt,name=original_url,json=originalUrl,proto3" json:"original_url,omitempty"`
+	Code          string                 `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`
+	ShortUrl      string                 `protobuf:"bytes,4,opt,name=short_url,json=shortUrl,proto3" json:"short_url,omitempty"`
 	ExpiresAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
 	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -170,13 +167,10 @@ func (x *GetOneResponse) GetCreatedAt() *timestamppb.Timestamp {
 }
 
 type UpdateRequest struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Omitted or empty strings leave the existing value unchanged, matching
-	// the current domain service.
-	OriginalUrl *string `protobuf:"bytes,1,opt,name=original_url,json=originalUrl,proto3,oneof" json:"original_url,omitempty"`
-	CustomCode  *string `protobuf:"bytes,2,opt,name=custom_code,json=customCode,proto3,oneof" json:"custom_code,omitempty"`
-	// Omitted means unchanged. Clearing expiration is not currently supported.
-	ExpiresAt     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=expires_at,json=expiresAt,proto3,oneof" json:"expires_at,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	OriginalUrl   *string                `protobuf:"bytes,1,opt,name=original_url,json=originalUrl,proto3,oneof" json:"original_url,omitempty"`
+	CustomCode    *string                `protobuf:"bytes,2,opt,name=custom_code,json=customCode,proto3,oneof" json:"custom_code,omitempty"`
+	ExpiresAt     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
 	Id            uint64                 `protobuf:"varint,4,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -448,14 +442,13 @@ var File_link_link_proto protoreflect.FileDescriptor
 
 const file_link_link_proto_rawDesc = "" +
 	"\n" +
-	"\x0flink/link.proto\x12\x04link\x1a\x1fgoogle/protobuf/timestamp.proto\"\xa2\x01\n" +
+	"\x0flink/link.proto\x12\x04link\x1a\x1fgoogle/protobuf/timestamp.proto\"\x8e\x01\n" +
 	"\rCreateRequest\x12!\n" +
 	"\foriginal_url\x18\x01 \x01(\tR\voriginalUrl\x12\x1f\n" +
 	"\vcustom_code\x18\x02 \x01(\tR\n" +
-	"customCode\x12>\n" +
+	"customCode\x129\n" +
 	"\n" +
-	"expires_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\texpiresAt\x88\x01\x01B\r\n" +
-	"\v_expires_at\"\xea\x01\n" +
+	"expires_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAt\"\xea\x01\n" +
 	"\x0eGetOneResponse\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x04R\x02id\x12!\n" +
 	"\foriginal_url\x18\x02 \x01(\tR\voriginalUrl\x12\x12\n" +
@@ -464,17 +457,16 @@ const file_link_link_proto_rawDesc = "" +
 	"\n" +
 	"expires_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAt\x129\n" +
 	"\n" +
-	"created_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"\xdd\x01\n" +
+	"created_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"\xc9\x01\n" +
 	"\rUpdateRequest\x12&\n" +
 	"\foriginal_url\x18\x01 \x01(\tH\x00R\voriginalUrl\x88\x01\x01\x12$\n" +
 	"\vcustom_code\x18\x02 \x01(\tH\x01R\n" +
-	"customCode\x88\x01\x01\x12>\n" +
+	"customCode\x88\x01\x01\x129\n" +
 	"\n" +
-	"expires_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampH\x02R\texpiresAt\x88\x01\x01\x12\x0e\n" +
+	"expires_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAt\x12\x0e\n" +
 	"\x02id\x18\x04 \x01(\x04R\x02idB\x0f\n" +
 	"\r_original_urlB\x0e\n" +
-	"\f_custom_codeB\r\n" +
-	"\v_expires_at\"\x1f\n" +
+	"\f_custom_code\"\x1f\n" +
 	"\rGetOneRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x04R\x02id\"\x0f\n" +
 	"\rGetAllRequest\"<\n" +
@@ -482,13 +474,13 @@ const file_link_link_proto_rawDesc = "" +
 	"\x05links\x18\x01 \x03(\v2\x14.link.GetOneResponseR\x05links\"\x1f\n" +
 	"\rDeleteRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x04R\x02id\"\x10\n" +
-	"\x0eDeleteResponse2\x96\x02\n" +
-	"\vLinkService\x123\n" +
+	"\x0eDeleteResponse2\x8f\x02\n" +
+	"\x04Link\x123\n" +
 	"\x06Create\x12\x13.link.CreateRequest\x1a\x14.link.GetOneResponse\x123\n" +
 	"\x06Update\x12\x13.link.UpdateRequest\x1a\x14.link.GetOneResponse\x123\n" +
-	"\x06GetOne\x12\x13.link.GetOneRequest\x1a\x14.link.GetOneResponse\x123\n" +
 	"\x06GetAll\x12\x13.link.GetAllRequest\x1a\x14.link.GetAllResponse\x123\n" +
-	"\x06Delete\x12\x13.link.DeleteRequest\x1a\x14.link.DeleteResponseB#Z!linkpulse/internal/pb/link;linkpbb\x06proto3"
+	"\x06Delete\x12\x13.link.DeleteRequest\x1a\x14.link.DeleteResponse\x123\n" +
+	"\x06GetOne\x12\x13.link.GetOneRequest\x1a\x14.link.GetOneResponseB\x1cZ\x1alinkpulse/internal/pb/linkb\x06proto3"
 
 var (
 	file_link_link_proto_rawDescOnce sync.Once
@@ -520,16 +512,16 @@ var file_link_link_proto_depIdxs = []int32{
 	8,  // 2: link.GetOneResponse.created_at:type_name -> google.protobuf.Timestamp
 	8,  // 3: link.UpdateRequest.expires_at:type_name -> google.protobuf.Timestamp
 	1,  // 4: link.GetAllResponse.links:type_name -> link.GetOneResponse
-	0,  // 5: link.LinkService.Create:input_type -> link.CreateRequest
-	2,  // 6: link.LinkService.Update:input_type -> link.UpdateRequest
-	3,  // 7: link.LinkService.GetOne:input_type -> link.GetOneRequest
-	4,  // 8: link.LinkService.GetAll:input_type -> link.GetAllRequest
-	6,  // 9: link.LinkService.Delete:input_type -> link.DeleteRequest
-	1,  // 10: link.LinkService.Create:output_type -> link.GetOneResponse
-	1,  // 11: link.LinkService.Update:output_type -> link.GetOneResponse
-	1,  // 12: link.LinkService.GetOne:output_type -> link.GetOneResponse
-	5,  // 13: link.LinkService.GetAll:output_type -> link.GetAllResponse
-	7,  // 14: link.LinkService.Delete:output_type -> link.DeleteResponse
+	0,  // 5: link.Link.Create:input_type -> link.CreateRequest
+	2,  // 6: link.Link.Update:input_type -> link.UpdateRequest
+	4,  // 7: link.Link.GetAll:input_type -> link.GetAllRequest
+	6,  // 8: link.Link.Delete:input_type -> link.DeleteRequest
+	3,  // 9: link.Link.GetOne:input_type -> link.GetOneRequest
+	1,  // 10: link.Link.Create:output_type -> link.GetOneResponse
+	1,  // 11: link.Link.Update:output_type -> link.GetOneResponse
+	5,  // 12: link.Link.GetAll:output_type -> link.GetAllResponse
+	7,  // 13: link.Link.Delete:output_type -> link.DeleteResponse
+	1,  // 14: link.Link.GetOne:output_type -> link.GetOneResponse
 	10, // [10:15] is the sub-list for method output_type
 	5,  // [5:10] is the sub-list for method input_type
 	5,  // [5:5] is the sub-list for extension type_name
@@ -542,7 +534,6 @@ func file_link_link_proto_init() {
 	if File_link_link_proto != nil {
 		return
 	}
-	file_link_link_proto_msgTypes[0].OneofWrappers = []any{}
 	file_link_link_proto_msgTypes[2].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

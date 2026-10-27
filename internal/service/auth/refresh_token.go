@@ -28,9 +28,13 @@ func (s Service) RefreshToken(ctx context.Context, req dto.RefreshTokenRequest) 
 			SetErr(err)
 	}
 
-	if session.RevokeAt != nil || time.Now().After(session.ExpiresAt) {
+	if claim.UserID == 0 ||
+		claim.SessionID == 0 ||
+		session.UserID != claim.UserID ||
+		session.RevokeAt != nil ||
+		!time.Now().Before(session.ExpiresAt) {
 		return dto.RefreshTokenResponse{}, richerror.New(op).
-			SetMessage("your session expired").
+			SetMessage("invalid or expired session").
 			SetKind(richerror.KindUnauthorize)
 	}
 

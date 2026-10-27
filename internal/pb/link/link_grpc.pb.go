@@ -4,7 +4,7 @@
 // - protoc             v7.36.0
 // source: link/link.proto
 
-package linkpb
+package link
 
 import (
 	context "context"
@@ -19,261 +19,253 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	LinkService_Create_FullMethodName = "/link.LinkService/Create"
-	LinkService_Update_FullMethodName = "/link.LinkService/Update"
-	LinkService_GetOne_FullMethodName = "/link.LinkService/GetOne"
-	LinkService_GetAll_FullMethodName = "/link.LinkService/GetAll"
-	LinkService_Delete_FullMethodName = "/link.LinkService/Delete"
+	Link_Create_FullMethodName = "/link.Link/Create"
+	Link_Update_FullMethodName = "/link.Link/Update"
+	Link_GetAll_FullMethodName = "/link.Link/GetAll"
+	Link_Delete_FullMethodName = "/link.Link/Delete"
+	Link_GetOne_FullMethodName = "/link.Link/GetOne"
 )
 
-// LinkServiceClient is the client API for LinkService service.
+// LinkClient is the client API for Link service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-//
-// Create, Update, GetAll and Delete require authorization metadata containing
-// "Bearer <access_token>". The server validates the token and active session,
-// derives user_id, and enforces ownership. GetOne is public, as in the HTTP API.
-type LinkServiceClient interface {
+type LinkClient interface {
 	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*GetOneResponse, error)
 	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*GetOneResponse, error)
-	GetOne(ctx context.Context, in *GetOneRequest, opts ...grpc.CallOption) (*GetOneResponse, error)
 	GetAll(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*GetAllResponse, error)
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
+	GetOne(ctx context.Context, in *GetOneRequest, opts ...grpc.CallOption) (*GetOneResponse, error)
 }
 
-type linkServiceClient struct {
+type linkClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewLinkServiceClient(cc grpc.ClientConnInterface) LinkServiceClient {
-	return &linkServiceClient{cc}
+func NewLinkClient(cc grpc.ClientConnInterface) LinkClient {
+	return &linkClient{cc}
 }
 
-func (c *linkServiceClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*GetOneResponse, error) {
+func (c *linkClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*GetOneResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetOneResponse)
-	err := c.cc.Invoke(ctx, LinkService_Create_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Link_Create_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *linkServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*GetOneResponse, error) {
+func (c *linkClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*GetOneResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetOneResponse)
-	err := c.cc.Invoke(ctx, LinkService_Update_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Link_Update_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *linkServiceClient) GetOne(ctx context.Context, in *GetOneRequest, opts ...grpc.CallOption) (*GetOneResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetOneResponse)
-	err := c.cc.Invoke(ctx, LinkService_GetOne_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *linkServiceClient) GetAll(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*GetAllResponse, error) {
+func (c *linkClient) GetAll(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*GetAllResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetAllResponse)
-	err := c.cc.Invoke(ctx, LinkService_GetAll_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Link_GetAll_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *linkServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error) {
+func (c *linkClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(DeleteResponse)
-	err := c.cc.Invoke(ctx, LinkService_Delete_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Link_Delete_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// LinkServiceServer is the server API for LinkService service.
-// All implementations must embed UnimplementedLinkServiceServer
-// for forward compatibility.
-//
-// Create, Update, GetAll and Delete require authorization metadata containing
-// "Bearer <access_token>". The server validates the token and active session,
-// derives user_id, and enforces ownership. GetOne is public, as in the HTTP API.
-type LinkServiceServer interface {
-	Create(context.Context, *CreateRequest) (*GetOneResponse, error)
-	Update(context.Context, *UpdateRequest) (*GetOneResponse, error)
-	GetOne(context.Context, *GetOneRequest) (*GetOneResponse, error)
-	GetAll(context.Context, *GetAllRequest) (*GetAllResponse, error)
-	Delete(context.Context, *DeleteRequest) (*DeleteResponse, error)
-	mustEmbedUnimplementedLinkServiceServer()
+func (c *linkClient) GetOne(ctx context.Context, in *GetOneRequest, opts ...grpc.CallOption) (*GetOneResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetOneResponse)
+	err := c.cc.Invoke(ctx, Link_GetOne_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// UnimplementedLinkServiceServer must be embedded to have
+// LinkServer is the server API for Link service.
+// All implementations must embed UnimplementedLinkServer
+// for forward compatibility.
+type LinkServer interface {
+	Create(context.Context, *CreateRequest) (*GetOneResponse, error)
+	Update(context.Context, *UpdateRequest) (*GetOneResponse, error)
+	GetAll(context.Context, *GetAllRequest) (*GetAllResponse, error)
+	Delete(context.Context, *DeleteRequest) (*DeleteResponse, error)
+	GetOne(context.Context, *GetOneRequest) (*GetOneResponse, error)
+	mustEmbedUnimplementedLinkServer()
+}
+
+// UnimplementedLinkServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedLinkServiceServer struct{}
+type UnimplementedLinkServer struct{}
 
-func (UnimplementedLinkServiceServer) Create(context.Context, *CreateRequest) (*GetOneResponse, error) {
+func (UnimplementedLinkServer) Create(context.Context, *CreateRequest) (*GetOneResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Create not implemented")
 }
-func (UnimplementedLinkServiceServer) Update(context.Context, *UpdateRequest) (*GetOneResponse, error) {
+func (UnimplementedLinkServer) Update(context.Context, *UpdateRequest) (*GetOneResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedLinkServiceServer) GetOne(context.Context, *GetOneRequest) (*GetOneResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetOne not implemented")
-}
-func (UnimplementedLinkServiceServer) GetAll(context.Context, *GetAllRequest) (*GetAllResponse, error) {
+func (UnimplementedLinkServer) GetAll(context.Context, *GetAllRequest) (*GetAllResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetAll not implemented")
 }
-func (UnimplementedLinkServiceServer) Delete(context.Context, *DeleteRequest) (*DeleteResponse, error) {
+func (UnimplementedLinkServer) Delete(context.Context, *DeleteRequest) (*DeleteResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Delete not implemented")
 }
-func (UnimplementedLinkServiceServer) mustEmbedUnimplementedLinkServiceServer() {}
-func (UnimplementedLinkServiceServer) testEmbeddedByValue()                     {}
+func (UnimplementedLinkServer) GetOne(context.Context, *GetOneRequest) (*GetOneResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetOne not implemented")
+}
+func (UnimplementedLinkServer) mustEmbedUnimplementedLinkServer() {}
+func (UnimplementedLinkServer) testEmbeddedByValue()              {}
 
-// UnsafeLinkServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to LinkServiceServer will
+// UnsafeLinkServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to LinkServer will
 // result in compilation errors.
-type UnsafeLinkServiceServer interface {
-	mustEmbedUnimplementedLinkServiceServer()
+type UnsafeLinkServer interface {
+	mustEmbedUnimplementedLinkServer()
 }
 
-func RegisterLinkServiceServer(s grpc.ServiceRegistrar, srv LinkServiceServer) {
-	// If the following call panics, it indicates UnimplementedLinkServiceServer was
+func RegisterLinkServer(s grpc.ServiceRegistrar, srv LinkServer) {
+	// If the following call panics, it indicates UnimplementedLinkServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&LinkService_ServiceDesc, srv)
+	s.RegisterService(&Link_ServiceDesc, srv)
 }
 
-func _LinkService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Link_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LinkServiceServer).Create(ctx, in)
+		return srv.(LinkServer).Create(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: LinkService_Create_FullMethodName,
+		FullMethod: Link_Create_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LinkServiceServer).Create(ctx, req.(*CreateRequest))
+		return srv.(LinkServer).Create(ctx, req.(*CreateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LinkService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Link_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LinkServiceServer).Update(ctx, in)
+		return srv.(LinkServer).Update(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: LinkService_Update_FullMethodName,
+		FullMethod: Link_Update_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LinkServiceServer).Update(ctx, req.(*UpdateRequest))
+		return srv.(LinkServer).Update(ctx, req.(*UpdateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LinkService_GetOne_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetOneRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LinkServiceServer).GetOne(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: LinkService_GetOne_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LinkServiceServer).GetOne(ctx, req.(*GetOneRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LinkService_GetAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Link_GetAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetAllRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LinkServiceServer).GetAll(ctx, in)
+		return srv.(LinkServer).GetAll(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: LinkService_GetAll_FullMethodName,
+		FullMethod: Link_GetAll_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LinkServiceServer).GetAll(ctx, req.(*GetAllRequest))
+		return srv.(LinkServer).GetAll(ctx, req.(*GetAllRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LinkService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Link_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LinkServiceServer).Delete(ctx, in)
+		return srv.(LinkServer).Delete(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: LinkService_Delete_FullMethodName,
+		FullMethod: Link_Delete_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LinkServiceServer).Delete(ctx, req.(*DeleteRequest))
+		return srv.(LinkServer).Delete(ctx, req.(*DeleteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// LinkService_ServiceDesc is the grpc.ServiceDesc for LinkService service.
+func _Link_GetOne_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetOneRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LinkServer).GetOne(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Link_GetOne_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LinkServer).GetOne(ctx, req.(*GetOneRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// Link_ServiceDesc is the grpc.ServiceDesc for Link service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var LinkService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "link.LinkService",
-	HandlerType: (*LinkServiceServer)(nil),
+var Link_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "link.Link",
+	HandlerType: (*LinkServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Create",
-			Handler:    _LinkService_Create_Handler,
+			Handler:    _Link_Create_Handler,
 		},
 		{
 			MethodName: "Update",
-			Handler:    _LinkService_Update_Handler,
-		},
-		{
-			MethodName: "GetOne",
-			Handler:    _LinkService_GetOne_Handler,
+			Handler:    _Link_Update_Handler,
 		},
 		{
 			MethodName: "GetAll",
-			Handler:    _LinkService_GetAll_Handler,
+			Handler:    _Link_GetAll_Handler,
 		},
 		{
 			MethodName: "Delete",
-			Handler:    _LinkService_Delete_Handler,
+			Handler:    _Link_Delete_Handler,
+		},
+		{
+			MethodName: "GetOne",
+			Handler:    _Link_GetOne_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

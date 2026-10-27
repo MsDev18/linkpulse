@@ -4,7 +4,7 @@
 // - protoc             v7.36.0
 // source: auth/auth.proto
 
-package authpb
+package auth
 
 import (
 	context "context"
@@ -19,11 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Auth_SendOtp_FullMethodName      = "/auth.Auth/SendOtp"
-	Auth_CheckOtp_FullMethodName     = "/auth.Auth/CheckOtp"
-	Auth_GetMe_FullMethodName        = "/auth.Auth/GetMe"
-	Auth_RefreshToken_FullMethodName = "/auth.Auth/RefreshToken"
-	Auth_Logout_FullMethodName       = "/auth.Auth/Logout"
+	Auth_SendOtp_FullMethodName             = "/auth.Auth/SendOtp"
+	Auth_CheckOtp_FullMethodName            = "/auth.Auth/CheckOtp"
+	Auth_RefreshToken_FullMethodName        = "/auth.Auth/RefreshToken"
+	Auth_GetMe_FullMethodName               = "/auth.Auth/GetMe"
+	Auth_Logout_FullMethodName              = "/auth.Auth/Logout"
+	Auth_ValidateAccessToken_FullMethodName = "/auth.Auth/ValidateAccessToken"
 )
 
 // AuthClient is the client API for Auth service.
@@ -32,12 +33,12 @@ const (
 type AuthClient interface {
 	SendOtp(ctx context.Context, in *SendOtpRequest, opts ...grpc.CallOption) (*SendOtpResponse, error)
 	CheckOtp(ctx context.Context, in *CheckOtpRequest, opts ...grpc.CallOption) (*CheckOtpResponse, error)
-	// Requires authorization metadata. The server derives user_id from the
-	// validated access token and checks that its session is active.
-	GetMe(ctx context.Context, in *GetMeRequest, opts ...grpc.CallOption) (*GetMeResponse, error)
 	RefreshToken(ctx context.Context, in *RefreshTokenRequest, opts ...grpc.CallOption) (*RefreshTokenResponse, error)
-	// Requires authorization metadata. Revokes the authenticated session.
+	// Require authorization bearer
+	GetMe(ctx context.Context, in *GetMeRequest, opts ...grpc.CallOption) (*GetMeResponse, error)
 	Logout(ctx context.Context, in *LogoutRequest, opts ...grpc.CallOption) (*LogoutResponse, error)
+	// require authorization
+	ValidateAccessToken(ctx context.Context, in *ValidateAccessTokenRequest, opts ...grpc.CallOption) (*ValidateAccessTokenResponse, error)
 }
 
 type authClient struct {
@@ -68,20 +69,20 @@ func (c *authClient) CheckOtp(ctx context.Context, in *CheckOtpRequest, opts ...
 	return out, nil
 }
 
-func (c *authClient) GetMe(ctx context.Context, in *GetMeRequest, opts ...grpc.CallOption) (*GetMeResponse, error) {
+func (c *authClient) RefreshToken(ctx context.Context, in *RefreshTokenRequest, opts ...grpc.CallOption) (*RefreshTokenResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetMeResponse)
-	err := c.cc.Invoke(ctx, Auth_GetMe_FullMethodName, in, out, cOpts...)
+	out := new(RefreshTokenResponse)
+	err := c.cc.Invoke(ctx, Auth_RefreshToken_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *authClient) RefreshToken(ctx context.Context, in *RefreshTokenRequest, opts ...grpc.CallOption) (*RefreshTokenResponse, error) {
+func (c *authClient) GetMe(ctx context.Context, in *GetMeRequest, opts ...grpc.CallOption) (*GetMeResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(RefreshTokenResponse)
-	err := c.cc.Invoke(ctx, Auth_RefreshToken_FullMethodName, in, out, cOpts...)
+	out := new(GetMeResponse)
+	err := c.cc.Invoke(ctx, Auth_GetMe_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -98,18 +99,28 @@ func (c *authClient) Logout(ctx context.Context, in *LogoutRequest, opts ...grpc
 	return out, nil
 }
 
+func (c *authClient) ValidateAccessToken(ctx context.Context, in *ValidateAccessTokenRequest, opts ...grpc.CallOption) (*ValidateAccessTokenResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ValidateAccessTokenResponse)
+	err := c.cc.Invoke(ctx, Auth_ValidateAccessToken_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServer is the server API for Auth service.
 // All implementations must embed UnimplementedAuthServer
 // for forward compatibility.
 type AuthServer interface {
 	SendOtp(context.Context, *SendOtpRequest) (*SendOtpResponse, error)
 	CheckOtp(context.Context, *CheckOtpRequest) (*CheckOtpResponse, error)
-	// Requires authorization metadata. The server derives user_id from the
-	// validated access token and checks that its session is active.
-	GetMe(context.Context, *GetMeRequest) (*GetMeResponse, error)
 	RefreshToken(context.Context, *RefreshTokenRequest) (*RefreshTokenResponse, error)
-	// Requires authorization metadata. Revokes the authenticated session.
+	// Require authorization bearer
+	GetMe(context.Context, *GetMeRequest) (*GetMeResponse, error)
 	Logout(context.Context, *LogoutRequest) (*LogoutResponse, error)
+	// require authorization
+	ValidateAccessToken(context.Context, *ValidateAccessTokenRequest) (*ValidateAccessTokenResponse, error)
 	mustEmbedUnimplementedAuthServer()
 }
 
@@ -126,14 +137,17 @@ func (UnimplementedAuthServer) SendOtp(context.Context, *SendOtpRequest) (*SendO
 func (UnimplementedAuthServer) CheckOtp(context.Context, *CheckOtpRequest) (*CheckOtpResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method CheckOtp not implemented")
 }
-func (UnimplementedAuthServer) GetMe(context.Context, *GetMeRequest) (*GetMeResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetMe not implemented")
-}
 func (UnimplementedAuthServer) RefreshToken(context.Context, *RefreshTokenRequest) (*RefreshTokenResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method RefreshToken not implemented")
 }
+func (UnimplementedAuthServer) GetMe(context.Context, *GetMeRequest) (*GetMeResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetMe not implemented")
+}
 func (UnimplementedAuthServer) Logout(context.Context, *LogoutRequest) (*LogoutResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Logout not implemented")
+}
+func (UnimplementedAuthServer) ValidateAccessToken(context.Context, *ValidateAccessTokenRequest) (*ValidateAccessTokenResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ValidateAccessToken not implemented")
 }
 func (UnimplementedAuthServer) mustEmbedUnimplementedAuthServer() {}
 func (UnimplementedAuthServer) testEmbeddedByValue()              {}
@@ -192,24 +206,6 @@ func _Auth_CheckOtp_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Auth_GetMe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetMeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AuthServer).GetMe(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Auth_GetMe_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).GetMe(ctx, req.(*GetMeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Auth_RefreshToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RefreshTokenRequest)
 	if err := dec(in); err != nil {
@@ -224,6 +220,24 @@ func _Auth_RefreshToken_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AuthServer).RefreshToken(ctx, req.(*RefreshTokenRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Auth_GetMe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServer).GetMe(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Auth_GetMe_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServer).GetMe(ctx, req.(*GetMeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -246,6 +260,24 @@ func _Auth_Logout_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Auth_ValidateAccessToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ValidateAccessTokenRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServer).ValidateAccessToken(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Auth_ValidateAccessToken_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServer).ValidateAccessToken(ctx, req.(*ValidateAccessTokenRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Auth_ServiceDesc is the grpc.ServiceDesc for Auth service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -262,16 +294,20 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Auth_CheckOtp_Handler,
 		},
 		{
-			MethodName: "GetMe",
-			Handler:    _Auth_GetMe_Handler,
-		},
-		{
 			MethodName: "RefreshToken",
 			Handler:    _Auth_RefreshToken_Handler,
 		},
 		{
+			MethodName: "GetMe",
+			Handler:    _Auth_GetMe_Handler,
+		},
+		{
 			MethodName: "Logout",
 			Handler:    _Auth_Logout_Handler,
+		},
+		{
+			MethodName: "ValidateAccessToken",
+			Handler:    _Auth_ValidateAccessToken_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
