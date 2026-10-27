@@ -26,6 +26,7 @@ type Repository interface {
 	IsExistsCode(ctx context.Context, code string) (bool, error)
 	GetAll(ctx context.Context, userID uint) ([]*entity.Link, error)
 	GetOneByID(ctx context.Context, id uint) (*entity.Link, error)
+	GetOneByCode(ctx context.Context, code string) (*entity.Link, error)
 	DeleteByID(ctx context.Context, userID uint, linkID uint) error
 }
 
@@ -48,7 +49,7 @@ func (s Service) entityLinkMapToDto(id uint, originalURL string, code string, ex
 }
 
 func (s Service) getShortURL(code string) string {
-	return strings.TrimRight(s.config.PublicBaseURL, "/") + "/r/" + code
+	return strings.TrimRight(s.config.PublicBaseURL, "/") + "/" + code
 }
 
 func (s Service) generateCode() (string, error) {

@@ -18,7 +18,7 @@ func (v Validator) UpdateLink(ctx context.Context, req dto.UpdateRequest) error 
 		validation.Field(&req.OriginalURL, validation.When(req.OriginalURL != "",
 			validation.Length(1, 2048), validation.By(v.validateOriginalURL),
 		)),
-		validation.Field(&req.CustomCode, validation.Match(CODE_REGEX)),
+		validation.Field(&req.CustomCode, validation.Match(CODE_REGEX), validation.By(v.validateCustomCode)),
 		validation.Field(&req.ExpiresAt, validation.By(v.validateExpiresAt)),
 	)
 	if err == nil {

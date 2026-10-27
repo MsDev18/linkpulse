@@ -12,4 +12,4 @@ auth:
   access_token_duration: 30m
 
 link:
-  public_base_url: 0.0.0.0:3000
+  public_base_url: http://localhost:3000

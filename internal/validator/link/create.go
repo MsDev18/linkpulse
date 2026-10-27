@@ -19,7 +19,7 @@ func (v Validator) CreateLink(ctx context.Context, req dto.CreateRequest) error 
 		ctx,
 		&req,
 		validation.Field(&req.OriginalURL, validation.Required, validation.Length(1, 2048), validation.By(v.validateOriginalURL)),
-		validation.Field(&req.CustomCode, validation.Match(CODE_REGEX)),
+		validation.Field(&req.CustomCode, validation.Match(CODE_REGEX), validation.By(v.validateCustomCode)),
 		validation.Field(&req.ExpiresAt, validation.By(v.validateExpiresAt)),
 	)
 
@@ -71,7 +71,6 @@ func (v Validator) validateOriginalURL(value any) error {
 
 	return nil
 }
-
 
 func (v Validator) validateExpiresAt(value any) error {
 	expiresAt, ok := value.(*time.Time)

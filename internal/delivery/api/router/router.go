@@ -31,4 +31,5 @@ func (r Router) RegisterRoute() {
 	r.RegisterHealthRoute()
 	r.RegisterAuthRoute()
 	r.RegisterLinkRoute()
+	r.RegisterRedirectRoute()
 }
