@@ -13,6 +13,7 @@ type Service interface {
 	Create(ctx context.Context, userID uint, req dto.CreateRequest) (dto.GetOneResponse, error)
 	GetAll(ctx context.Context, userID uint) ([]dto.GetOneResponse, error)
 	GetOneByID(ctx context.Context, id uint) (dto.GetOneResponse, error)
+	Resolve(ctx context.Context, code string) (string, error)
 	Update(ctx context.Context, userID uint, linkID uint, req dto.UpdateRequest) (dto.GetOneResponse, error)
 	DeleteByID(ctx context.Context, userID uint, linkID uint) error
 }

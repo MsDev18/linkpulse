@@ -438,6 +438,94 @@ func (*DeleteResponse) Descriptor() ([]byte, []int) {
 	return file_link_link_proto_rawDescGZIP(), []int{7}
 }
 
+type ResolveRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Code          string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ResolveRequest) Reset() {
+	*x = ResolveRequest{}
+	mi := &file_link_link_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ResolveRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ResolveRequest) ProtoMessage() {}
+
+func (x *ResolveRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_link_link_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ResolveRequest.ProtoReflect.Descriptor instead.
+func (*ResolveRequest) Descriptor() ([]byte, []int) {
+	return file_link_link_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *ResolveRequest) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+type ResolveResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	OriginalUrl   string                 `protobuf:"bytes,1,opt,name=original_url,json=originalUrl,proto3" json:"original_url,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ResolveResponse) Reset() {
+	*x = ResolveResponse{}
+	mi := &file_link_link_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ResolveResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ResolveResponse) ProtoMessage() {}
+
+func (x *ResolveResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_link_link_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ResolveResponse.ProtoReflect.Descriptor instead.
+func (*ResolveResponse) Descriptor() ([]byte, []int) {
+	return file_link_link_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *ResolveResponse) GetOriginalUrl() string {
+	if x != nil {
+		return x.OriginalUrl
+	}
+	return ""
+}
+
 var File_link_link_proto protoreflect.FileDescriptor
 
 const file_link_link_proto_rawDesc = "" +
@@ -474,13 +562,18 @@ const file_link_link_proto_rawDesc = "" +
 	"\x05links\x18\x01 \x03(\v2\x14.link.GetOneResponseR\x05links\"\x1f\n" +
 	"\rDeleteRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x04R\x02id\"\x10\n" +
-	"\x0eDeleteResponse2\x8f\x02\n" +
+	"\x0eDeleteResponse\"$\n" +
+	"\x0eResolveRequest\x12\x12\n" +
+	"\x04code\x18\x01 \x01(\tR\x04code\"4\n" +
+	"\x0fResolveResponse\x12!\n" +
+	"\foriginal_url\x18\x01 \x01(\tR\voriginalUrl2\xc7\x02\n" +
 	"\x04Link\x123\n" +
 	"\x06Create\x12\x13.link.CreateRequest\x1a\x14.link.GetOneResponse\x123\n" +
 	"\x06Update\x12\x13.link.UpdateRequest\x1a\x14.link.GetOneResponse\x123\n" +
 	"\x06GetAll\x12\x13.link.GetAllRequest\x1a\x14.link.GetAllResponse\x123\n" +
 	"\x06Delete\x12\x13.link.DeleteRequest\x1a\x14.link.DeleteResponse\x123\n" +
-	"\x06GetOne\x12\x13.link.GetOneRequest\x1a\x14.link.GetOneResponseB\x1cZ\x1alinkpulse/internal/pb/linkb\x06proto3"
+	"\x06GetOne\x12\x13.link.GetOneRequest\x1a\x14.link.GetOneResponse\x126\n" +
+	"\aResolve\x12\x14.link.ResolveRequest\x1a\x15.link.ResolveResponseB\x1cZ\x1alinkpulse/internal/pb/linkb\x06proto3"
 
 var (
 	file_link_link_proto_rawDescOnce sync.Once
@@ -494,7 +587,7 @@ func file_link_link_proto_rawDescGZIP() []byte {
 	return file_link_link_proto_rawDescData
 }
 
-var file_link_link_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_link_link_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_link_link_proto_goTypes = []any{
 	(*CreateRequest)(nil),         // 0: link.CreateRequest
 	(*GetOneResponse)(nil),        // 1: link.GetOneResponse
@@ -504,26 +597,30 @@ var file_link_link_proto_goTypes = []any{
 	(*GetAllResponse)(nil),        // 5: link.GetAllResponse
 	(*DeleteRequest)(nil),         // 6: link.DeleteRequest
 	(*DeleteResponse)(nil),        // 7: link.DeleteResponse
-	(*timestamppb.Timestamp)(nil), // 8: google.protobuf.Timestamp
+	(*ResolveRequest)(nil),        // 8: link.ResolveRequest
+	(*ResolveResponse)(nil),       // 9: link.ResolveResponse
+	(*timestamppb.Timestamp)(nil), // 10: google.protobuf.Timestamp
 }
 var file_link_link_proto_depIdxs = []int32{
-	8,  // 0: link.CreateRequest.expires_at:type_name -> google.protobuf.Timestamp
-	8,  // 1: link.GetOneResponse.expires_at:type_name -> google.protobuf.Timestamp
-	8,  // 2: link.GetOneResponse.created_at:type_name -> google.protobuf.Timestamp
-	8,  // 3: link.UpdateRequest.expires_at:type_name -> google.protobuf.Timestamp
+	10, // 0: link.CreateRequest.expires_at:type_name -> google.protobuf.Timestamp
+	10, // 1: link.GetOneResponse.expires_at:type_name -> google.protobuf.Timestamp
+	10, // 2: link.GetOneResponse.created_at:type_name -> google.protobuf.Timestamp
+	10, // 3: link.UpdateRequest.expires_at:type_name -> google.protobuf.Timestamp
 	1,  // 4: link.GetAllResponse.links:type_name -> link.GetOneResponse
 	0,  // 5: link.Link.Create:input_type -> link.CreateRequest
 	2,  // 6: link.Link.Update:input_type -> link.UpdateRequest
 	4,  // 7: link.Link.GetAll:input_type -> link.GetAllRequest
 	6,  // 8: link.Link.Delete:input_type -> link.DeleteRequest
 	3,  // 9: link.Link.GetOne:input_type -> link.GetOneRequest
-	1,  // 10: link.Link.Create:output_type -> link.GetOneResponse
-	1,  // 11: link.Link.Update:output_type -> link.GetOneResponse
-	5,  // 12: link.Link.GetAll:output_type -> link.GetAllResponse
-	7,  // 13: link.Link.Delete:output_type -> link.DeleteResponse
-	1,  // 14: link.Link.GetOne:output_type -> link.GetOneResponse
-	10, // [10:15] is the sub-list for method output_type
-	5,  // [5:10] is the sub-list for method input_type
+	8,  // 10: link.Link.Resolve:input_type -> link.ResolveRequest
+	1,  // 11: link.Link.Create:output_type -> link.GetOneResponse
+	1,  // 12: link.Link.Update:output_type -> link.GetOneResponse
+	5,  // 13: link.Link.GetAll:output_type -> link.GetAllResponse
+	7,  // 14: link.Link.Delete:output_type -> link.DeleteResponse
+	1,  // 15: link.Link.GetOne:output_type -> link.GetOneResponse
+	9,  // 16: link.Link.Resolve:output_type -> link.ResolveResponse
+	11, // [11:17] is the sub-list for method output_type
+	5,  // [5:11] is the sub-list for method input_type
 	5,  // [5:5] is the sub-list for extension type_name
 	5,  // [5:5] is the sub-list for extension extendee
 	0,  // [0:5] is the sub-list for field type_name
@@ -541,7 +638,7 @@ func file_link_link_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_link_link_proto_rawDesc), len(file_link_link_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

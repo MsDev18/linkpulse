@@ -19,11 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Link_Create_FullMethodName = "/link.Link/Create"
-	Link_Update_FullMethodName = "/link.Link/Update"
-	Link_GetAll_FullMethodName = "/link.Link/GetAll"
-	Link_Delete_FullMethodName = "/link.Link/Delete"
-	Link_GetOne_FullMethodName = "/link.Link/GetOne"
+	Link_Create_FullMethodName  = "/link.Link/Create"
+	Link_Update_FullMethodName  = "/link.Link/Update"
+	Link_GetAll_FullMethodName  = "/link.Link/GetAll"
+	Link_Delete_FullMethodName  = "/link.Link/Delete"
+	Link_GetOne_FullMethodName  = "/link.Link/GetOne"
+	Link_Resolve_FullMethodName = "/link.Link/Resolve"
 )
 
 // LinkClient is the client API for Link service.
@@ -35,6 +36,7 @@ type LinkClient interface {
 	GetAll(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*GetAllResponse, error)
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
 	GetOne(ctx context.Context, in *GetOneRequest, opts ...grpc.CallOption) (*GetOneResponse, error)
+	Resolve(ctx context.Context, in *ResolveRequest, opts ...grpc.CallOption) (*ResolveResponse, error)
 }
 
 type linkClient struct {
@@ -95,6 +97,16 @@ func (c *linkClient) GetOne(ctx context.Context, in *GetOneRequest, opts ...grpc
 	return out, nil
 }
 
+func (c *linkClient) Resolve(ctx context.Context, in *ResolveRequest, opts ...grpc.CallOption) (*ResolveResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ResolveResponse)
+	err := c.cc.Invoke(ctx, Link_Resolve_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LinkServer is the server API for Link service.
 // All implementations must embed UnimplementedLinkServer
 // for forward compatibility.
@@ -104,6 +116,7 @@ type LinkServer interface {
 	GetAll(context.Context, *GetAllRequest) (*GetAllResponse, error)
 	Delete(context.Context, *DeleteRequest) (*DeleteResponse, error)
 	GetOne(context.Context, *GetOneRequest) (*GetOneResponse, error)
+	Resolve(context.Context, *ResolveRequest) (*ResolveResponse, error)
 	mustEmbedUnimplementedLinkServer()
 }
 
@@ -128,6 +141,9 @@ func (UnimplementedLinkServer) Delete(context.Context, *DeleteRequest) (*DeleteR
 }
 func (UnimplementedLinkServer) GetOne(context.Context, *GetOneRequest) (*GetOneResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetOne not implemented")
+}
+func (UnimplementedLinkServer) Resolve(context.Context, *ResolveRequest) (*ResolveResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Resolve not implemented")
 }
 func (UnimplementedLinkServer) mustEmbedUnimplementedLinkServer() {}
 func (UnimplementedLinkServer) testEmbeddedByValue()              {}
@@ -240,6 +256,24 @@ func _Link_GetOne_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Link_Resolve_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResolveRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LinkServer).Resolve(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Link_Resolve_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LinkServer).Resolve(ctx, req.(*ResolveRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Link_ServiceDesc is the grpc.ServiceDesc for Link service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -266,6 +300,10 @@ var Link_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetOne",
 			Handler:    _Link_GetOne_Handler,
+		},
+		{
+			MethodName: "Resolve",
+			Handler:    _Link_Resolve_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

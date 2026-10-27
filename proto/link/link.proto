@@ -13,6 +13,7 @@ service Link {
   rpc Delete(DeleteRequest) returns (DeleteResponse) ;
 
   rpc GetOne(GetOneRequest) returns (GetOneResponse) ;
+  rpc Resolve(ResolveRequest) returns (ResolveResponse) ;
 }
 
 message CreateRequest {
@@ -57,4 +58,12 @@ message DeleteRequest {
 
 message DeleteResponse {
 
+}
+
+message ResolveRequest {
+  string code = 1;
+}
+
+message ResolveResponse {
+  string original_url = 1;
 }
